@@ -1,0 +1,131 @@
+{	
+	"allSelect" : "全选" , 
+	"titles" : [ "商品" , "单价" , "数量" , "小计" , "操作"] ,
+	"operation" :{
+			"remove" : "删除" ,
+			"follow" : "移到我的关注",
+			"addFollow" : "加到我的关注"
+	},
+	"settlement" : [
+			 "删除选中的商品" , "移到我的关注" ,"清除下柜商品"
+	],
+	"warn" : {
+		"display" : false ,
+		"title" : "提示" ,
+		"msg" : "商品数量必须大于0" 
+	},	
+	"removeGoods" : {
+		"display" : false ,
+		"title" : "删除" ,
+		"msg1" : "删除商品？",
+		"msg2" : "您可以选择移到关注，或删除商品。" ,
+		"btn1" : "删除" ,
+		"btn2" : "移到我的关注"
+	},
+	"Attention":{
+		"display" : false ,
+		"title" : "关注",
+		"add" : "成功加入到我的关注！" ,
+		"msg1" : "移到关注",
+		"msg2" : "移动后选中商品将不在购物车中显示。" ,
+		"warn" : "没有选中的商品" ,
+		"btn1" : "确定" ,
+		"btn2" : "取消" ,
+		"result" : "成功移到我的关注！" ,
+		"resultShow" : false
+	},
+	"clearArkGoods" :{
+		"display" : false ,
+		"title": "提示" ,
+		"msg1" : "没有下柜商品！" ,
+		"msg2" : "" ,
+		"btn1" : "确定" ,
+		"btn2" : "取消"		
+	},
+	"settlementImage":{
+		"btnImage" : "https://misc.360buyimg.com/user/cart/css/i/cart-submit-btn.png" ,
+		"tipsImage" : "https://misc.360buyimg.com/user/cart/css/i/price-tips.png"
+	},
+	"settlementBtnIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-submit-btn.png" ,
+	"warnIcon" : "https://misc.360buyimg.com/user/cart/css/i/icon48.png" ,
+	"list" :[
+	         {
+	        	 "shopDiplay" : true ,
+	        	 "shopName" : "京东自营",
+	        	 "checked" : true ,
+	        	 "productId" : "5159242" ,
+	        	 "productName" : "小米Max2 全网通 4GB+64GB 金色 移动联通电信4G手机 双卡双待" ,
+	        	 "productPrice" :  "1699.50" ,
+	        	 "productPromotion" : "更多促销" ,
+	        	 "PromotionDisplay" : true ,
+	        	 "productImage" : "https://img10.360buyimg.com/cms/s80x80_jfs/t6010/111/3843138696/73795/bf58700d/5959ab7fN154e56b4.jpg" ,
+	        	 "productColor" : "金色" ,
+	        	 "productSize" : "4GB 64GB" ,
+	        	 "productQuantity" : 1 ,
+	        	 "productStock" : "有货" ,
+	        	 "productWeight" : 0.43 ,
+	        	 "productWeightUnit" : "kg",
+	        	 "productURL" : "https://item.jd.com/5159242.html" ,
+	        	 "productReturnIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "productReturn" : "支持7天无理由退货" ,
+	        	 "productYanbao" : "选延保",
+	        	 "productYanbaoIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "YanbaoDisplay" : true ,
+	        	 "productPack" : "" ,
+	        	 "productPackIcon" : "" ,
+	        	 "PackDisplay" : false
+	         },
+	         {
+	        	 "shopDiplay" : false ,
+	        	 "shopName" : "京东自营",
+	        	 "checked" : false ,
+	        	 "productId" : "4595061" ,
+	        	 "productName" : "魅族 PRO 7 4GB+128GB 全网通公开版 香槟金 移动联通电信4G手机 双卡双待" ,
+	        	 "productPrice" :  "3380.00" ,
+	        	 "productPromotion" : "" ,
+	        	 "PromotionDisplay" : false ,
+	        	 "productImage" : "https://img10.360buyimg.com/cms/s80x80_jfs/t5974/358/7097552449/81316/b96ba95a/59788619Nc97bcfcc.jpg" ,
+	        	 "productColor" : "香槟金" ,
+	        	 "productSize" : "4GB 128GB" ,
+	        	 "productQuantity" : 1 ,
+	        	 "productStock" : "有货" ,
+	        	 "productWeight" : 0.52 ,
+	        	 "productWeightUnit" : "kg",
+	        	 "productURL" : "https://item.jd.com/4560435.html" ,
+	        	 "productReturnIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "productReturn" : "支持7天无理由退货" ,
+	        	 "productYanbao" : "选延保",
+	        	 "productYanbaoIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "YanbaoDisplay" : true ,
+	        	 "productPack" : ""	,
+	        	 "productPackIcon" : "" ,
+	        	 "PackDisplay" : false       	 
+	         },
+	         {
+	        	 "shopDiplay" : false ,
+	        	 "shopName" : "京东自营",
+	        	 "checked" : false ,
+	        	 "productId" : "3726830" ,
+	        	 "productName" : "Apple iPhone 6s Plus (A1699) 32G 玫瑰金色 移动联通电信4G手机" ,
+	        	 "productPrice" :  "4699.00" ,
+	        	 "productPromotion" : "更多促销" ,
+	        	 "PromotionDisplay" : true ,
+	        	 "productImage" : "https://img10.360buyimg.com/cms/s80x80_jfs/t1750/64/1543556998/95929/2dd7e965/55f0e824Neac4417f.jpg" ,
+	        	 "productColor" : "金色" ,
+	        	 "productSize" : "公开版" ,
+	        	 "productQuantity" : 2 ,
+	        	 "productStock" : "有货" ,
+	        	 "productWeight" : 0.5 ,
+	        	 "productWeightUnit" : "kg",
+	        	 "productURL" : "https://item.jd.com/3726830.html" ,
+	        	 "productReturnIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "productReturn" : "支持7天无理由退货" ,
+	        	 "productYanbao" : "选延保" ,
+	        	 "productYanbaoIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "YanbaoDisplay" : true ,
+	        	 "productPack" : "选包装",
+	        	 "productPackIcon" : "https://misc.360buyimg.com/user/cart/css/i/cart-icons-201707.png" ,
+	        	 "PackDisplay" : true
+	         }
+	 ]
+}

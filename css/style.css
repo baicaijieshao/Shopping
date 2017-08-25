@@ -1,0 +1,436 @@
+*{
+	padding: 0;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+}
+body{font-family: "Microsoft YaHei",SimSun,verdana;font-size: 12px;}
+li{list-style: none;float: left;}
+a{text-decoration: none;color: #333;}
+img{border: 0;vertical-align: middle;}
+em{font-style: normal;}
+.app{
+	position: relative;
+	margin: 40px auto;
+	width: 990px;
+	color: #666;			
+}
+.title{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background: #f3f3f3;
+}
+.title li:not(:nth-child(1)) {
+	text-align: center;
+}
+.title li:nth-child(2){
+	width: 391px;
+	text-align: left;
+}
+.title li:nth-child(3){
+	width: 120px;
+	padding-right: 40px;
+	text-align: right;
+}
+.title li:nth-child(4){
+	width: 80px;
+}
+.title li:nth-child(5){
+	width: 100px;
+	padding-right: 40px;
+	text-align: right;
+}
+.title li:last-child{
+	width: 75px;
+	text-align: left;
+}
+.allSelect{
+	width: 130px;
+	text-align: left;
+}
+.allSelect input {
+	display: inline-block;
+	margin: 0 3px 0 10px;
+	vertical-align:middle;
+}
+.allSelect div{
+	display: inline-block;
+}			
+.cell{
+	float: left;
+	padding: 15px 0 10px;
+}
+.detail{
+	margin-top: 20px ;
+	line-height: 20px;
+	font-size: 12px;
+	border-style: solid ;
+	border-width: 2px 1px 1px ;
+	border-color: #aaa #f1f1f1 #f1f1f1;
+}
+.detail::after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.detail-list{
+	width: 978px;				
+	padding: 0 0 20px 10px ;
+	background: #fff;
+	border-top: 1px solid #c5c5c5 ;
+}
+.detail-list:first-child{
+	border: none;
+}
+.checkedList{
+	background: #fff4e8;
+}
+.checkbox{
+	width: 30px;
+}
+.goods{
+	width: 300px;
+	padding: 15px 0 10px;
+}
+.goods-img{
+	float: left;width: 80px;height: 80px;border: 1px solid #eee;margin-right: 10px;
+}
+.item-name{
+	height: 40px;
+	line-height: 20px;
+	overflow: hidden;
+}
+.item-extend{
+	margin-top: 2px;
+	height: 18px;
+	line-height: 18px;				
+}
+.promise{
+	display: inline-block;
+	padding: 2px 4px 0 0;			
+}
+.promise:first-child{
+	display: block;
+}
+.item-extend-icon{
+	display: inline-block;
+	width: 17px;
+	height: 16px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+.item-extend-return i{
+	background-position: -54px -23px;				
+}
+.item-extend-yanbao i{
+	background-position: 0 -23px;				
+}
+.item-extend-pack i {
+	background-position: -27px -23px;
+}	
+.promise a{
+	padding: 1px 4px 0 7px;
+	height: 16px;
+	line-height: 16px;
+	vertical-align: middle;
+}
+.info{
+	width: 160px;
+	height: 80px;
+	line-height: 20px;
+	padding: 15px 10px 0;
+}
+.price{
+	width: 130px;
+	padding-right: 30px;
+	text-align: right;
+	font-family: verdana;
+	font-weight: 400;
+	overflow: hidden;
+}
+.price strong{
+	display: block;
+	font-weight: 400;
+}
+.sales-promotion{
+    display: block;
+    position: relative;
+    width: 70px;
+    border: 1px solid #f9d2d3;
+    color: #e4393c;
+    height: 18px;
+    text-align: left;
+    line-height: 18px;
+    padding: 0 0 0 8px;
+    cursor: pointer;
+    background: #fff;
+    text-decoration: none;
+    float: right;
+    overflow: hidden;
+    font-size: 12px;
+	font-weight: 400;
+}
+.quantity-form{
+	height: 20px;
+	width: 78px;
+	text-align: center;
+	border: 1px solid #cacbcb;
+	background: #fff;
+}
+.quantity-increment,.quantity-decrement{
+	display: inline-block;
+	float: left;
+	padding: 1px 0;
+	margin: 0;
+	width: 16px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	color: #666;
+	background: #fff;
+}
+.quantity-increment{
+	float: right;
+}
+.quantity-num{
+	float: left;
+	padding: 1px 0;
+	margin: 0;
+	width: 42px;
+	height: 18px;
+	text-align: center;
+	font-size: 12px;
+	font-family: verdana;
+	color: #333;
+	border-left: 1px solid #cacbcb;
+	border-right: 1px solid #cacbcb;
+	border-top: 0;
+	border-bottom: 0;
+}
+.quantity-stock{
+	color: #aaa;
+	text-align: center;
+}
+.sum{
+	width: 100px;
+	padding-right: 40px;
+	text-align: right;
+	font-family: verdana;
+}
+.sum span{
+	display: block;
+}
+.ops{
+	width: 75px;
+}
+.ops a{
+	display: block;
+}
+.ops a:hover,.settlement-operation a:hover{
+	color: #f30213;
+}
+.settlement{
+	float: left;
+	width: 988px;
+	height: 50px;
+	margin: 20px 0;
+	border: 1px solid #f0f0f0;
+}
+.settlement-allSelect{
+	float: left;
+	height: 100%;
+	line-height: 50px;
+}
+.settlement-allSelect input{
+	margin: 0 3px 0 10px;
+}
+.settlement-allSelect div{
+	display: inline-block;
+}
+.settlement-operation{
+	display: inline-block;
+	float: left;
+}
+.settlement-operation a{
+	margin-left: 10px;
+	height: 100%;
+	line-height: 50px;
+	color: #666;
+}
+.settlement-btn{
+	float: right
+}
+.settlement-btn a{
+	float: right;
+	width: 96px;
+	height: 52px;
+	margin-top: -1px;
+	text-align: center;
+	font: 600 18px/52px "microsoft yahei";
+	color: #fffffd;
+	background-position:  0 0;
+	background-repeat: no-repeat;
+}
+.settlement-total{
+	position: relative;
+	float: right;
+	height: 43px;
+	width: auto;
+	margin: 7px 20px 0 10px;
+	line-height: 20px;
+	white-space: nowrap;
+}
+.text{
+	float: left;
+	width: 50px;
+	text-align: right;
+}
+.total{
+	display: inline-block;
+	font-family: verdana;
+}
+.totalprice{
+	font-size: 16px;
+	color: #e4393c;
+	font-weight: 700;
+}
+.price-tips{
+	display: inline-block;
+	height: 18px;
+	width: 12px;
+	margin-left: 5px;
+	background-repeat: no-repeat;
+}
+.settlement-amount{
+	float: right;
+	margin: 7px 0 0;
+	color: #999;
+}
+.settlement-amount em{
+	margin: 0 3px;
+	font-family: verdana;
+	font-weight: 700;
+	color: #E4393C;
+}
+
+.mask{
+	position: fixed;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.15);
+}
+.app-tip{
+	float: left;
+	width: 360px;
+	margin: 10px;
+	border: 4px solid rgba(0,0,0,.1);
+	border-radius: 5px;
+}
+.app-tip-title{
+	padding-left: 10px;
+	height: 31px;
+	line-height: 31px;
+	background: #F3F3F3;
+	font-size: 14px;
+	color: #666;
+}
+.app-tip-box{
+	height: 88px;
+	width: 340px;
+	padding: 10px;
+	background: #fff;
+}
+.tip-attention{
+	height: 128px;
+}
+.app-tip-box div{
+	display: inline-block;
+}
+.app-tip-icon{
+	float: left;
+	margin-left: 30px;
+	width: 48px;
+	height: 48px;
+	background-repeat: no-repeat;
+	background-position: -94px 0;
+}
+.app-tip-text{
+	float: left;
+	margin-left: 12px;
+}
+.app-tip-text h3{
+	font-size: 18px;
+	line-height: 21px;
+	color: #ff6c00;
+}
+.app-tip-text div{
+	line-height: 20px;
+	color: #aaa;
+}
+.app-tip-close{
+	float: right;
+	margin-right: 10px;
+	color: #cbcbcb;
+}
+.app-tip-btns{
+	width: 100%;
+	margin-top: 20px;
+	text-align: center;
+}
+.app-tip-btns a{
+	float: none;	
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 3px;
+	font-family: arial,"microsoft yahei";
+	font-weight: 400;
+	cursor: pointer;
+}
+.app-tip-btn1{
+	padding:  0 10px;
+	height: 25px;
+	line-height: 25px;
+	border: 0;
+	color: #fff;
+	background-color: #e74649;
+	background-image: linear-gradient(to top ,#e74649 0 ,#df3134 100%);
+}
+.app-tip-btn2{
+	padding: 0 9px;
+	height: 23px;
+	line-height: 23px;
+	color: #323333;
+	background-color: #f2f2f2;
+	background-image: linear-gradient(to top,#f2f2f2 0 , #f7f7f7 100%);
+	border: 1px solid #e1e1e1;
+}
+#attention-result{
+	position: absolute;
+	padding: 5px 10px;
+	height: 20px;
+	width: 140px;
+	top: 0;
+	left: 0;
+	line-height:20px ;
+	text-align: center;
+	border: 1px solid #ccc;
+	background: #fff;
+	color: #71b247;
+	z-index: 9;
+}
+
+@-webkit-keyframes opacity {
+	0% {
+	opacity: 1; /*初始状态 透明度为0*/
+	}
+	100% {
+	opacity: 0; /*结尾状态 透明度为1*/
+	}
+}
