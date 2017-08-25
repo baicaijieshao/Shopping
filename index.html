@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://unpkg.com/vue"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	</head>
+	<body>
+		<div class="app">
+			<div class="title">
+				<ul>
+					<li class="allSelect">
+						<input type="checkbox" v-model="selectAll" @click="selectColor($event)"/>
+						<div v-text="goods.allSelect"></div>
+					</li>
+					<li v-for="title in goods.titles" v-text="title"></li>
+				</ul>
+			</div>
+			<div class="detail">
+				<ul>
+					<li v-for="(item,index) in goods.list"  class="detail-list" v-if="item.show" :class="{ checkedList:item.checked }">
+						<div class="cell checkbox">
+							<input type="checkbox" class="goods-checkbox"  v-model="item.checked"/>
+						</div>
+						<div class="cell goods">
+							<!--商品图片-->
+							<div class="goods-img">
+								<a :href="item.productURL" target="_blank">
+									<img :src="item.productImage" :alt="item.productName" />
+								</a>
+							</div>
+							<!--商品信息-->
+							<div class="msg">
+								<div class="item-name">
+									<a :href="item.productURL" v-text="item.productName" target="_blank"></a>
+								</div>
+								<div class="item-extend">
+									<div class="promise item-extend-return">
+										<i class="item-extend-icon" :style="{backgroundImage:'url(' + item.productReturnIcon + ')'}"></i>
+										<a href="#none" v-text="item.productReturn"></a>
+									</div>
+									<div class="promise item-extend-pack" v-if="item.PackDisplay">
+										<i class="item-extend-icon" :style="{backgroundImage:'url(' + item.productPackIcon + ')'}"></i>
+										<a href="#none" v-text="item.productPack"></a>
+									</div>
+									<div class="promise item-extend-yanbao" v-if="item.YanbaoDisplay">
+										<i class="item-extend-icon" :style="{backgroundImage:'url(' + item.productYanbaoIcon + ')'}"></i>
+										<a href="#none" v-text="item.productYanbao"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="cell info">
+							<div class="info-parma" v-text="'颜色：'+ item.productColor "></div>
+							<div class="info-parma" v-text="'尺码：'+ item.productSize "></div>
+						</div>
+						<div class="cell price">
+							<strong v-html="'￥' + item.productPrice"></strong>
+							<a href="#none" class="sales-promotion" v-if="item.PromotionDisplay"
+								v-html="item.productPromotion + ' <b>&or;</b>'">
+							</a>
+						</div>
+						<div class="cell quantity" >
+							<div class="quantity-form">
+								<a href="#none" class="quantity-decrement" @click="changeQuantity(item,-1)">-</a>
+								<input type="text" class="quantity-num" :value="item.productQuantity" v-model="item.productQuantity"/>
+								<a href="#none" class="quantity-increment" @click="changeQuantity(item,1)">+</a>
+							</div>
+							<div class="quantity-stock" v-text="item.productStock"></div>
+						</div>
+						<div class="cell sum" >
+							<strong v-html="'￥'+(item.productQuantity * item.productPrice).toFixed(2)"></strong>
+							<span v-html="(item.productWeight*item.productQuantity).toFixed(2)+item.productWeightUnit"></span>
+						</div>
+						<div class="cell ops">
+							<a href="#none" class="ops-remove" v-text="goods.operation.remove" @click="del(item)"></a>
+							<a href="#none" class="ops-follow" v-text="goods.operation.follow" @click="settlementOps($event,1,index)"></a>
+							<a href="#none" class="ops-addFollow" v-text="goods.operation.addFollow"></a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="settlement">
+				<div class="settlement-allSelect">
+					<input type="checkbox" v-model="selectAll" @click="selectColor($event)"/>
+					<div v-text="goods.allSelect"></div>
+				</div>
+				<div class="settlement-operation">
+					<a href="#none" v-for="(opera,key) in goods.settlement" v-text="opera" @click="settlementOps($event,key)" ></a>
+				</div>
+				<div class="settlement-btn">
+					<a href="#none" v-if="typeof goods.settlementImage != unload "
+						:style="{backgroundImage:'url(' + goods.settlementImage.btnImage + ')'}"></a>
+				</div>
+				<div class="settlement-total">
+					<span class="text">总价：</span>
+					<span class="total totalprice" v-if="typeof total != unload" v-html="'￥' + total.toFixed(2)"></span>
+					<span class="price-tips" v-if="typeof goods.settlementImage != unload " :style="{backgroundImage:'url(' + goods.settlementImage.tipsImage + ')'}"></span>
+					<br>
+					<span class="text">已节省：</span>
+					<span class="total totalreprice">-￥0.00</span>
+				</div>
+				<div class="settlement-amount" v-html="'已选择<em>' + sumQuantity +'</em>件商品'"></div>
+			</div>
+			<div id="attention-result" v-if="typeof goods.Attention  != unload" v-show="goods.Attention.resultShow" v-text="goods.Attention.result"></div>
+			<div id="mask" class="mask">
+				<!--商品数量小于1提示-->
+				<div class="app-tip" v-if="typeof goods.warn != unload" v-show="goods.warn.display">
+					<div class="app-tip-title">
+						<span v-text="goods.warn.title"></span>
+						<a class="app-tip-close">&#9932;</a>
+					</div>
+					<div class="app-tip-box">
+						<div class="app-tip-icon"
+							:style="{backgroundImage:'url(' + goods.warnIcon + ')'}"></div>
+						<div class="app-tip-text" >
+							<h3 v-text="goods.warn.msg"></h3>
+						</div>
+					</div>
+				</div>
+				<!---删除选中商品-->
+				<div class="app-tip" v-if="typeof goods.removeGoods != unload" v-show="goods.removeGoods.display">
+					<div class="app-tip-title">
+						<span v-text="goods.removeGoods.title"></span>
+						<a class="app-tip-close" @click="remGoodsOp(0)">&#9932;</a>
+					</div>
+					<div class="app-tip-box tip-attention">
+						<div class="app-tip-icon"
+							:style="{backgroundImage:'url(' + goods.warnIcon + ')'}"></div>
+						<div class="app-tip-text">
+							<h3 v-text="goods.removeGoods.msg1"></h3>
+							<div v-text="goods.removeGoods.msg2"></div>
+						</div>
+						<div class="app-tip-btns">
+							<a href="#none" class="app-tip-btn2" v-text="goods.removeGoods.btn1" @click="remGoodsOp(1)"></a>
+							<a href="#none" class="app-tip-btn1" v-text="goods.removeGoods.btn2" @click="attention(1)"></a>
+						</div>
+					</div>
+				</div>
+				<!---移到我的关注-->
+				<div class="app-tip" v-if="typeof goods.Attention != unload" v-show="goods.Attention.display">
+					<div class="app-tip-title">
+						<span v-text="goods.Attention.title"></span>
+						<a class="app-tip-close" @click="attention(0)">&#9932;</a>
+					</div>
+					<div class="app-tip-box tip-attention">
+						<div class="app-tip-icon"
+							:style="{backgroundImage:'url(' + goods.warnIcon + ')'}"></div>
+						<div class="app-tip-text">
+							<h3 v-text="goods.Attention.msg1"></h3>
+							<div v-text="goods.Attention.msg2"></div>
+						</div>
+						<div class="app-tip-btns">
+							<a href="#none" class="app-tip-btn1" v-text="goods.Attention.btn1" @click="attention(1)"></a>
+							<a href="#none" class="app-tip-btn2" v-text="goods.Attention.btn2" @click="attention(0)"></a>
+						</div>
+					</div>
+				</div>
+				<!---清除已下柜商品-->
+				<div class="app-tip" v-if="typeof goods.clearArkGoods != unload" v-show="goods.clearArkGoods.display">
+					<div class="app-tip-title">
+						<span v-text="goods.clearArkGoods.title"></span>
+						<a class="app-tip-close" @click="clearArkGoods()">&#9932;</a>
+					</div>
+					<div class="app-tip-box tip-attention">
+						<div class="app-tip-icon"
+							:style="{backgroundImage:'url(' + goods.warnIcon + ')'}"></div>
+						<div class="app-tip-text">
+							<h3 v-text="goods.clearArkGoods.msg1"></h3>
+							<div v-text="goods.clearArkGoods.msg2"></div>
+						</div>
+						<div class="app-tip-btns">
+							<a href="#none" class="app-tip-btn1" v-text="goods.clearArkGoods.btn1" @click="clearArkGoods()"></a>
+							<a href="#none" class="app-tip-btn2" v-text="goods.clearArkGoods.btn2" @click="clearArkGoods()"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			// 向上箭头&and;  向下箭头&or;
+			var vm = new Vue({
+				el : '.app' ,
+				data : {
+					goods : {} ,
+					unload : 'undefined' ,
+					warn : false ,
+					attIndex : '' ,
+					attOffset :{
+						"left" : '' ,
+						"top" : ''
+					}
+				},
+				created:function(){
+					this.get();
+				},
+				methods:{
+					get:function(){
+						var self = this ;
+						this.$http.get('./data.json').then( function(response){
+							self.goods = response.body ;
+
+							self.goods.list.forEach(function(item,index){
+								//给每个列商品增加show属性，来显示或删除该商品
+								if(typeof item.show == 'undefined'){
+									self.$set(item,'show',true);
+								}
+							});
+						});
+					},
+					changeQuantity:function(obj,way){
+						if( way > 0){
+							obj.productQuantity++ ;
+						}else{
+							obj.productQuantity-- ;
+							if( obj.productQuantity <= 1 ){
+								obj.productQuantity = 1 ;
+							}
+						}
+					},
+					//删除商品
+					del:function(item){
+						item.show = false ;
+						item.checked = false ;
+					},
+					//修改选中商品行的背景颜色
+					selectColor:function(event){
+						var _this = this ;
+						if(typeof lists != 'undefined'){
+							var checkedStatus = event.target.checked ;
+							if(checkedStatus == true){
+								_this.goods.list.forEach(function(item){
+									item.checked = true ;
+								})
+							}
+						}
+					},
+					//结算操作
+					settlementOps:function(event,key,index){
+						var self = this;
+						var target = event.target;
+						var mask = document.getElementById('mask') ;
+						//删除选中的商品
+						if( key == 0){
+							mask.style.display = 'flex' ;
+							if(this.goods.removeGoods != this.unload){
+								this.goods.removeGoods.display = true ;
+							}
+							self.attOffset.left = target.offsetLeft-20 ;
+							self.attOffset.top = target.offsetTop-10 ;
+							console.log(key);
+						}else if( key == 1 ){
+							console.log(key);
+							//移到我的关注
+							mask.style.display = 'flex' ;
+							if(this.goods.Attention != this.unload){
+								this.goods.Attention.display = true ;
+							}
+							self.attOffset.left = target.offsetLeft-20 ;
+							self.attOffset.top = target.offsetTop-10 ;
+							if(typeof index != 'undefined'){self.attIndex = index ;}
+						}else if( key == 2 ){
+							//清除下柜商品
+							mask.style.display = 'flex' ;
+							if(this.goods.clearArkGoods != this.unload){
+								this.goods.clearArkGoods.display = true ;
+							}
+						}
+					},
+					//关闭遮罩层
+					maskClose:function(){
+						document.getElementById('mask').style.display = 'none' ;
+					},
+					//删除选中商品界面操作
+					remGoodsOp:function(way){
+						var _this = this ;
+						// 1代表确定
+						// 0代表取消，不做其他数据操作
+						if( way == 1){
+							_this.goods.list.filter(function(item){
+								if(item.checked == true){
+									item.show = false ;
+									item.checked = false ;
+								}
+							})
+						}
+						//关闭遮罩层和弹窗
+						_this.maskClose();
+							if(this.goods.removeGoods != this.unload){
+								this.goods.removeGoods.display = false ;
+							}
+					},
+					//移到我的关注窗口操作
+					attention:function(way){
+						var _this = this ;
+						var lists = _this.goods.list ;
+						// 1代表确定
+						// 0代表取消，不做其他数据操作
+						if( way == 1){
+							//将移到关注的商品从购物车中移除
+							if(typeof lists != _this.unload){
+								if( typeof _this.attIndex == 'string'){
+									console.log('未定义');
+									lists.filter(function(item){return item.show}).forEach(function(item){
+										if( item.checked == true ){ item.show=false ;item.checked=false }
+									});
+								}else{
+									console.log(typeof _this.attIndex);
+									lists[_this.attIndex].show = false ;
+									lists[_this.attIndex].checked = false ;
+								}
+							}
+							_this.attIndex = '' ;
+							// 确定移到我的关注后执行 信息提示
+							_this.goods.Attention.resultShow = true ;
+							var result = document.getElementById('attention-result');
+							result.style.left = _this.attOffset.left + 'px';
+							result.style.top = _this.attOffset.top + 'px';
+							result.style.animation = 'opacity 4s ease-out' ;
+							setTimeout(function(){
+								_this.goods.Attention.resultShow = false ;
+							},4000)
+						}
+						//关闭遮罩层和弹窗
+						_this.maskClose();
+							if(_this.goods.Attention != _this.unload){
+								_this.goods.Attention.display = false ;
+							}
+
+					},
+					//清除下柜同品
+					clearArkGoods:function(){
+						var _this = this ;
+						//关闭遮罩层和弹窗
+						_this.maskClose();
+							if(this.goods.clearArkGoods != this.unload){
+								this.goods.clearArkGoods.display = false ;
+							}
+					},
+				},
+				computed:{
+					//选中所有商品
+					selectAll:{
+						//全选和取消全选
+						get:function(){
+							if(typeof this.goods.list != 'undefined'){
+								return this.goods.list.filter(function(item){return item.checked && item.show;}).length
+									== this.goods.list.filter(function(item){return item.show}).length ;
+							}
+						},
+						set:function(value){
+							this.goods.list.map(function(item){
+								if( item.show == true){ item.checked=value;}
+								return item.checked ;
+							});
+						}
+					},
+					//计算选中商品总数量
+					sumQuantity:function(){
+						var sum = 0 ;
+						if(typeof this.goods.list != 'undefined'){
+							var selected = this.goods.list.filter(function(item){return item.checked});
+		                  	for(var i=0;i<selected.length;i++){
+		                    	sum += parseFloat(selected[i].productQuantity);
+		                  	}
+							return sum ;
+						}
+
+					},
+					//计算选中商品总金额
+					total:function(){
+						var sum = 0 ;
+						//过滤没有选择的商品
+						if(typeof this.goods.list != 'undefined'){
+							var selected = this.goods.list.filter(function(item){return item.checked});
+							for(var i=0 ;i<selected.length ;i++){
+								sum += parseFloat(selected[i].productPrice * selected[i].productQuantity);
+							}
+							return sum ;
+						}
+
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
