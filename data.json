@@ -1,5 +1,5 @@
-{	
-	"allSelect" : "全选" , 
+{
+	"allSelect" : "全选" ,
 	"titles" : [ "商品" , "单价" , "数量" , "小计" , "操作"] ,
 	"operation" :{
 			"remove" : "删除" ,
@@ -12,8 +12,8 @@
 	"warn" : {
 		"display" : false ,
 		"title" : "提示" ,
-		"msg" : "商品数量必须大于0" 
-	},	
+		"msg" : "请至少选中一件商品!"
+	},
 	"removeGoods" : {
 		"display" : false ,
 		"title" : "删除" ,
@@ -40,7 +40,7 @@
 		"msg1" : "没有下柜商品！" ,
 		"msg2" : "" ,
 		"btn1" : "确定" ,
-		"btn2" : "取消"		
+		"btn2" : "取消"
 	},
 	"settlementImage":{
 		"btnImage" : "https://misc.360buyimg.com/user/cart/css/i/cart-submit-btn.png" ,
@@ -99,7 +99,7 @@
 	        	 "YanbaoDisplay" : true ,
 	        	 "productPack" : ""	,
 	        	 "productPackIcon" : "" ,
-	        	 "PackDisplay" : false       	 
+	        	 "PackDisplay" : false
 	         },
 	         {
 	        	 "shopDiplay" : false ,
