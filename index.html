@@ -77,7 +77,7 @@
 						<div class="cell ops">
 							<a href="#none" class="ops-remove" v-text="goods.operation.remove" @click="del(item)"></a>
 							<a href="#none" class="ops-follow" v-text="goods.operation.follow" @click="settlementOps($event,1,index)"></a>
-							<a href="#none" class="ops-addFollow" v-text="goods.operation.addFollow"></a>
+							<a href="#none" class="ops-addFollow" v-text="goods.operation.addFollow" @click="attWindow($event)"></a>
 						</div>
 					</li>
 				</ul>
@@ -186,13 +186,11 @@
 				data : {
 					goods : {} ,
 					unload : 'undefined' ,
-					warn : false ,
 					attIndex : '' ,
 					attOffset :{
 						"left" : '' ,
 						"top" : ''
 					},
-					checkedNum : true
 				},
 				created:function(){
 					this.get();
@@ -261,11 +259,15 @@
 							}else if( key == 1 ){
 								//移到我的关注
 								mask.style.display = 'flex' ;
-								if(self.goods.Attention != self.unload){
-									if(len < 1){
-										self.goods.warn.display = true ;
-									}else {
-										self.goods.Attention.display = true ;
+								if(arguments.length>2){
+									self.goods.Attention.display = true ;
+								}else {
+									if(self.goods.Attention != self.unload){
+										if(len < 1){
+											self.goods.warn.display = true ;
+										}else {
+											self.goods.Attention.display = true ;
+										}
 									}
 								}
 								self.attOffset.left = target.offsetLeft-20 ;
@@ -309,11 +311,22 @@
 							}
 					},
 					//成功加入关注窗口提示
-					attWindow:function(obj){
+					attWindow:function(event){
+						var _this = this;
 						var result = document.getElementById('attention-result');
-						result.style.left = obj.attOffset.left + 'px' ;
-						result.style.top = obj.attOffset.top + 'px' ;
+						if(arguments.length < 1){
+							result.style.left = _this.attOffset.left + 'px' ;
+							result.style.top = _this.attOffset.top + 'px' ;
+						}else {
+							result.style.left = event.target.offsetLeft-20 + 'px' ;
+							result.style.top = event.target.offsetTop-10 + 'px' ;
+							console.log(event.target.left)
+						}
+						_this.goods.Attention.resultShow = true ;
 						result.style.animation = 'opacity 4s ease-out' ;
+						setTimeout(function(){
+							_this.goods.Attention.resultShow = false ;
+						},4000)
 					},
 					//移到我的关注窗口操作
 					attention:function(way,type){
@@ -329,18 +342,13 @@
 										if( item.checked == true ){ item.show=false ;item.checked=false }
 									});
 								}else{
-									console.log(typeof _this.attIndex);
 									lists[_this.attIndex].show = false ;
 									lists[_this.attIndex].checked = false ;
 								}
 							}
 							_this.attIndex = '' ;
 							// 确定移到我的关注后执行 信息提示
-							_this.goods.Attention.resultShow = true ;
-							_this.attWindow(_this);
-							setTimeout(function(){
-								_this.goods.Attention.resultShow = false ;
-							},4000)
+							_this.attWindow();
 						}
 						//关闭遮罩层和弹窗
 						_this.maskClose();
