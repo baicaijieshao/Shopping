@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>Shopping</title>
 		<script src="https://unpkg.com/vue"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -110,7 +110,7 @@
 				<div class="app-tip" v-if="typeof goods.warn != unload" v-show="goods.warn.display">
 					<div class="app-tip-title">
 						<span v-text="goods.warn.title"></span>
-						<a class="app-tip-close">&#9932;</a>
+						<a class="app-tip-close" @click='noSelectTip()'>&#9932;</a>
 					</div>
 					<div class="app-tip-box">
 						<div class="app-tip-icon"
@@ -135,7 +135,7 @@
 						</div>
 						<div class="app-tip-btns">
 							<a href="#none" class="app-tip-btn2" v-text="goods.removeGoods.btn1" @click="remGoodsOp(1)"></a>
-							<a href="#none" class="app-tip-btn1" v-text="goods.removeGoods.btn2" @click="attention(1)"></a>
+							<a href="#none" class="app-tip-btn1" v-text="goods.removeGoods.btn2" @click="attention(1,'removeGoods')"></a>
 						</div>
 					</div>
 				</div>
@@ -191,7 +191,8 @@
 					attOffset :{
 						"left" : '' ,
 						"top" : ''
-					}
+					},
+					checkedNum : true
 				},
 				created:function(){
 					this.get();
@@ -199,13 +200,14 @@
 				methods:{
 					get:function(){
 						var self = this ;
-						this.$http.get('./data.json').then( function(response){
+						this.$http.get('data.json').then( function(response){
 							self.goods = response.body ;
 
 							self.goods.list.forEach(function(item,index){
 								//给每个列商品增加show属性，来显示或删除该商品
 								if(typeof item.show == 'undefined'){
 									self.$set(item,'show',true);
+									//self.$set(item,'tempmsg','');
 								}
 							});
 						});
@@ -243,35 +245,49 @@
 						var target = event.target;
 						var mask = document.getElementById('mask') ;
 						//删除选中的商品
-						if( key == 0){
-							mask.style.display = 'flex' ;
-							if(this.goods.removeGoods != this.unload){
-								this.goods.removeGoods.display = true ;
-							}
-							self.attOffset.left = target.offsetLeft-20 ;
-							self.attOffset.top = target.offsetTop-10 ;
-							console.log(key);
-						}else if( key == 1 ){
-							console.log(key);
-							//移到我的关注
-							mask.style.display = 'flex' ;
-							if(this.goods.Attention != this.unload){
-								this.goods.Attention.display = true ;
-							}
-							self.attOffset.left = target.offsetLeft-20 ;
-							self.attOffset.top = target.offsetTop-10 ;
-							if(typeof index != 'undefined'){self.attIndex = index ;}
-						}else if( key == 2 ){
-							//清除下柜商品
-							mask.style.display = 'flex' ;
-							if(this.goods.clearArkGoods != this.unload){
-								this.goods.clearArkGoods.display = true ;
+						if( self.goods.list != 'undefined'){
+							var len = self.goods.list.filter(function(item){return item.checked}).length ;
+							if( key == 0){
+								mask.style.display = 'flex' ;
+								if(self.goods.removeGoods != self.unload){
+									if(len < 1){
+										self.goods.warn.display = true ;
+									}else {
+										self.goods.removeGoods.display = true ;
+									}
+								}
+								self.attOffset.left = target.offsetLeft-20 ;
+								self.attOffset.top = target.offsetTop-10 ;
+							}else if( key == 1 ){
+								//移到我的关注
+								mask.style.display = 'flex' ;
+								if(self.goods.Attention != self.unload){
+									if(len < 1){
+										self.goods.warn.display = true ;
+									}else {
+										self.goods.Attention.display = true ;
+									}
+								}
+								self.attOffset.left = target.offsetLeft-20 ;
+								self.attOffset.top = target.offsetTop-10 ;
+								if(typeof index != 'undefined'){self.attIndex = index ;}
+							}else if( key == 2 ){
+								//清除下柜商品
+								mask.style.display = 'flex' ;
+								if(this.goods.clearArkGoods != self.unload){
+									this.goods.clearArkGoods.display = true ;
+								}
 							}
 						}
 					},
 					//关闭遮罩层
 					maskClose:function(){
 						document.getElementById('mask').style.display = 'none' ;
+					},
+					//商品数量小于1提示
+					noSelectTip:function(){
+						this.goods.warn.display = false ;
+						this.maskClose();
 					},
 					//删除选中商品界面操作
 					remGoodsOp:function(way){
@@ -292,8 +308,15 @@
 								this.goods.removeGoods.display = false ;
 							}
 					},
+					//成功加入关注窗口提示
+					attWindow:function(obj){
+						var result = document.getElementById('attention-result');
+						result.style.left = obj.attOffset.left + 'px' ;
+						result.style.top = obj.attOffset.top + 'px' ;
+						result.style.animation = 'opacity 4s ease-out' ;
+					},
 					//移到我的关注窗口操作
-					attention:function(way){
+					attention:function(way,type){
 						var _this = this ;
 						var lists = _this.goods.list ;
 						// 1代表确定
@@ -302,7 +325,6 @@
 							//将移到关注的商品从购物车中移除
 							if(typeof lists != _this.unload){
 								if( typeof _this.attIndex == 'string'){
-									console.log('未定义');
 									lists.filter(function(item){return item.show}).forEach(function(item){
 										if( item.checked == true ){ item.show=false ;item.checked=false }
 									});
@@ -315,20 +337,22 @@
 							_this.attIndex = '' ;
 							// 确定移到我的关注后执行 信息提示
 							_this.goods.Attention.resultShow = true ;
-							var result = document.getElementById('attention-result');
-							result.style.left = _this.attOffset.left + 'px';
-							result.style.top = _this.attOffset.top + 'px';
-							result.style.animation = 'opacity 4s ease-out' ;
+							_this.attWindow(_this);
 							setTimeout(function(){
 								_this.goods.Attention.resultShow = false ;
 							},4000)
 						}
 						//关闭遮罩层和弹窗
 						_this.maskClose();
-							if(_this.goods.Attention != _this.unload){
-								_this.goods.Attention.display = false ;
+						if( arguments.length < 2){
+								if(_this.goods.Attention != _this.unload){
+									_this.goods.Attention.display = false ;
+								}
+						}else {
+							if(_this.goods.removeGoods != _this.unload){
+								_this.goods.removeGoods.display = false ;
 							}
-
+						}
 					},
 					//清除下柜同品
 					clearArkGoods:function(){
