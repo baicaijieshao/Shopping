@@ -12,7 +12,7 @@ em{font-style: normal;}
 	position: relative;
 	margin: 40px auto;
 	width: 990px;
-	color: #666;			
+	color: #666;
 }
 .title{
 	width: 100%;
@@ -56,7 +56,7 @@ em{font-style: normal;}
 }
 .allSelect div{
 	display: inline-block;
-}			
+}
 .cell{
 	float: left;
 	padding: 15px 0 10px;
@@ -75,7 +75,7 @@ em{font-style: normal;}
 	clear: both;
 }
 .detail-list{
-	width: 978px;				
+	width: 978px;
 	padding: 0 0 20px 10px ;
 	background: #fff;
 	border-top: 1px solid #c5c5c5 ;
@@ -104,11 +104,11 @@ em{font-style: normal;}
 .item-extend{
 	margin-top: 2px;
 	height: 18px;
-	line-height: 18px;				
+	line-height: 18px;
 }
 .promise{
 	display: inline-block;
-	padding: 2px 4px 0 0;			
+	padding: 2px 4px 0 0;
 }
 .promise:first-child{
 	display: block;
@@ -122,14 +122,14 @@ em{font-style: normal;}
 	overflow: hidden;
 }
 .item-extend-return i{
-	background-position: -54px -23px;				
+	background-position: -54px -23px;
 }
 .item-extend-yanbao i{
-	background-position: 0 -23px;				
+	background-position: 0 -23px;
 }
 .item-extend-pack i {
 	background-position: -27px -23px;
-}	
+}
 .promise a{
 	padding: 1px 4px 0 7px;
 	height: 16px;
@@ -385,7 +385,7 @@ em{font-style: normal;}
 	text-align: center;
 }
 .app-tip-btns a{
-	float: none;	
+	float: none;
 	display: inline-block;
 	vertical-align: middle;
 	border-radius: 3px;
@@ -427,6 +427,14 @@ em{font-style: normal;}
 }
 
 @-webkit-keyframes opacity {
+	0% {
+	opacity: 1; /*初始状态 透明度为0*/
+	}
+	100% {
+	opacity: 0; /*结尾状态 透明度为1*/
+	}
+}
+@keyframes opacity {
 	0% {
 	opacity: 1; /*初始状态 透明度为0*/
 	}
